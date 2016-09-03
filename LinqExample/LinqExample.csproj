@@ -65,6 +65,7 @@
       <DependentUpon>UsersList.mdf</DependentUpon>
     </Content>
     <Content Include="ClientDetailInfoPage.aspx" />
+    <Content Include="ConfirmUpdate.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="UpdateClient.aspx" />
     <Content Include="Web.config" />
@@ -83,6 +84,13 @@
     </Compile>
     <Compile Include="ClientDetailInfoPage.aspx.designer.cs">
       <DependentUpon>ClientDetailInfoPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmUpdate.aspx.cs">
+      <DependentUpon>ConfirmUpdate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfirmUpdate.aspx.designer.cs">
+      <DependentUpon>ConfirmUpdate.aspx</DependentUpon>
     </Compile>
     <Compile Include="CustomerOrderResult.cs" />
     <Compile Include="DBClasses.designer.cs">

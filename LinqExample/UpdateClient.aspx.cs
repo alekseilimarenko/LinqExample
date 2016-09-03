@@ -6,27 +6,25 @@ namespace LinqExample
     public partial class UpdateClient : System.Web.UI.Page
     {
         readonly DBClassesDataContext _dbContext = new DBClassesDataContext();
+        private string name, address;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            GetData();
+            name = txtName.Text;
+            address = txtAddress.Text;
+
+            if (Request.QueryString["UserId"] != null)
+            {
+                GetData();
+            }
         }
         
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            var user = from u in _dbContext.Users
-                where u.UserId == int.Parse(Request.QueryString["UserId"])
-                select u;
+            Session["name"] = txtName.Text;
+            Session["address"] = txtAddress.Text;
 
-            foreach (User item in user)
-            {
-                item.UserName = txtName.Text;
-                item.UserEmail = txtAddress.Text;
-            }
-
-            _dbContext.SubmitChanges();
-
-            GetData();
+            Response.Redirect("ConfirmUpdate.aspx?UserId=" + Request.QueryString["UserId"]);
         }
 
         private void GetData()
