@@ -1,34 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace LinqExample
 {
     public partial class Default : System.Web.UI.Page
     {
-        DBClassesDataContext dbContext = new DBClassesDataContext();
+        //readonly DBClassesDataContext _dbContext = new DBClassesDataContext();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            var q = (from c in dbContext.Users
-                     join o in dbContext.Orders
-                     on c.UserId equals o.UserId into orders
-                     select new
-                     {
-                         c.UserId,
-                         c.UserName,
-                         c.UserEmail,
-                         ResultAmount = (from ord in dbContext.Orders
-                                         where c.UserId == ord.UserId
-                                         select ord.Amount).Sum()
+        //    var q = (from c in _dbContext.Users
+        //             join o in _dbContext.Orders
+        //             on c.UserId equals o.UserId into orders
+        //             select new
+        //             {
+        //                 c.UserId,
+        //                 c.UserName,
+        //                 c.UserEmail,
+        //                 ResultAmount = (from ord in _dbContext.Orders
+        //                                 where c.UserId == ord.UserId
+        //                                 select ord.Amount).Sum()
 
-                     }).ToList();
+        //             }).ToList();
 
-            myGridView.DataSource = q;
-            myGridView.DataBind();
+        //    myGridView.DataSource = q;
+        //    myGridView.DataBind();
         }
 
         protected void myGridView_SelectedIndexChanged(object sender, EventArgs eventArgs)
@@ -48,11 +45,6 @@ namespace LinqExample
                 e.Row.ToolTip = "Click to select row";
                 e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(myGridView, "Select$" + e.Row.RowIndex);
             }
-        }
-
-        protected void myGridView_RowCreated1(object sender, GridViewRowEventArgs e)
-        {
-
         }
     }
 }
