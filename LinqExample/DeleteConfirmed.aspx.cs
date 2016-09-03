@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace LinqExample
 {
-    public partial class ConfirmUpdate : System.Web.UI.Page
+    public partial class DeleteConfirmed : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -14,17 +14,18 @@ namespace LinqExample
         {
             var dbContext = new DBClassesDataContext();
 
+            var userOrders = (from ord in dbContext.Orders
+                                    where ord.UserId == int.Parse(Request.QueryString["UserId"])
+                                    select ord).ToList();
+
             var user = (from u in dbContext.Users
-                       where u.UserId == int.Parse(Request.QueryString["UserId"])
-                       select u).SingleOrDefault();
+                                    where u.UserId == int.Parse(Request.QueryString["UserId"])
+                                    select u).SingleOrDefault();
+
             try
             {
-                if (user != null)
-                {
-                    user.UserName = Session["name"].ToString();
-                    user.UserEmail = Session["address"].ToString();
-                }
-
+                dbContext.Orders.DeleteAllOnSubmit(userOrders);
+                dbContext.Users.DeleteOnSubmit(user);
                 dbContext.SubmitChanges();
             }
             catch (Exception ex)

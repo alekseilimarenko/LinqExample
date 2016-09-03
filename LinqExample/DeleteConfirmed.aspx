@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ConfirmUpdate.aspx.cs" Inherits="LinqExample.ConfirmUpdate" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DeleteConfirmed.aspx.cs" Inherits="LinqExample.DeleteConfirmed" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <h3> Сохранить изменения? </h3>
+    <h3> Подтверждаете удаление? </h3>
         <div>
             <asp:Button ID="btnYes" runat="server" Text="Да" OnClick="btnYes_Click" Width="60px" />
             &nbsp;

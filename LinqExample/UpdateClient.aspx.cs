@@ -21,23 +21,20 @@ namespace LinqExample
         
         protected void btnUpdate_Click(object sender, EventArgs e)
         {
-            Session["name"] = txtName.Text;
-            Session["address"] = txtAddress.Text;
+            Session["name"] = name;
+            Session["address"] = address;
 
             Response.Redirect("ConfirmUpdate.aspx?UserId=" + Request.QueryString["UserId"]);
         }
 
         private void GetData()
         {
-            var q = from user in _dbContext.Users
+            var q = (from user in _dbContext.Users
                     where user.UserId == int.Parse(Request.QueryString["UserId"])
-                    select user;
+                    select user).SingleOrDefault();
 
-            foreach (User user in q)
-            {
-                txtName.Text = user.UserName;
-                txtAddress.Text = user.UserEmail;
-            }
+            txtName.Text = q.UserName;
+            txtAddress.Text = q.UserEmail;
         }
     }
 }
