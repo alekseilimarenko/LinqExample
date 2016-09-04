@@ -28,14 +28,6 @@
                 </td>
             </tr>
             <tr>
-                <td>
-                    Order Amount
-                </td>
-                <td>
-                    <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
                 <td colspan="2">
                     
                     <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" Text="ADD" Width="63px" />
@@ -44,6 +36,9 @@
             </tr>
         </table>
     </div>
+        <p>
+            <asp:Label ID="lblResult" runat="server"></asp:Label>
+        </p>
     </form>
 </body>
 </html>

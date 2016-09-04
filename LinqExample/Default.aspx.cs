@@ -10,22 +10,7 @@ namespace LinqExample
 
         protected void Page_Load(object sender, EventArgs e)
         {
-        //    var q = (from c in _dbContext.Users
-        //             join o in _dbContext.Orders
-        //             on c.UserId equals o.UserId into orders
-        //             select new
-        //             {
-        //                 c.UserId,
-        //                 c.UserName,
-        //                 c.UserEmail,
-        //                 ResultAmount = (from ord in _dbContext.Orders
-        //                                 where c.UserId == ord.UserId
-        //                                 select ord.Amount).Sum()
-
-        //             }).ToList();
-
-        //    myGridView.DataSource = q;
-        //    myGridView.DataBind();
+            
         }
 
         protected void myGridView_SelectedIndexChanged(object sender, EventArgs eventArgs)

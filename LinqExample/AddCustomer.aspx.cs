@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace LinqExample
 {
     public partial class AddContact : System.Web.UI.Page
     {
+        readonly ClientWebService _ws = new ClientWebService();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,16 +13,25 @@ namespace LinqExample
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-
-            //User user = new User();
-            //Order order = new Order();
-
-            //user.UserName = txtName.Text;
-            //user.UserEmail = txtAddress.Text;
-
-            //order.Amount = Int32.Parse(txtAmount.Text);
-
-            
+            var resIns = _ws.GetClientIdByNameAndAddress(txtName.Text, txtAddress.Text);
+            if (resIns > 0)
+            {
+                lblResult.Text = "Клиент с данным именем и адресом уже присутствует в базе";
+            }
+            else
+            {
+                var res = _ws.InsertClient(txtName.Text, txtAddress.Text);
+                if (res > 0)
+                {
+                    txtName.Text = "";
+                    txtAddress.Text = "";
+                    lblResult.Text = "Данные добавлены в базу успешно";
+                }
+                else
+                {
+                    lblResult.Text = "Данные отсутствуют";
+                }
+            }
         }
     }
 }

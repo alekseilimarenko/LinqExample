@@ -28,6 +28,7 @@
 </head>
 <body style="width: 601px; height: 234px;">
     <form id="form1" runat="server" class="auto-style1">
+        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/AddCustomer.aspx">Add Client</asp:HyperLink>
         <br />
         <table>
             <tr>
