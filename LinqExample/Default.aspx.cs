@@ -7,10 +7,15 @@ namespace LinqExample
     public partial class Default : System.Web.UI.Page
     {
         private readonly DBClassesDataContext _dbContext = new DBClassesDataContext();
-
+        private readonly ClientWebService _ws = new ClientWebService();
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            var resSelect = _ws.GetClientList();
+            if (resSelect == 0)
+            {
+                _ws.InsertTestingData();
+            }
         }
 
         protected void myGridView_SelectedIndexChanged(object sender, EventArgs eventArgs)
@@ -39,7 +44,7 @@ namespace LinqExample
                 var q = (from c in _dbContext.Users
                          join o in _dbContext.Orders
                          on c.UserId equals o.UserId into orders
-                         where c.UserName.StartsWith(txtSearch.Text)
+                         where c.UserName.Contains(txtSearch.Text)
                          select new
                          {
                              c.UserId,

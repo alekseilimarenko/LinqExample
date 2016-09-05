@@ -97,12 +97,6 @@ namespace LinqExample
 		
 		private string _UserEmail;
 		
-		private System.Data.Linq.Binary _UserAvatar;
-		
-		private string _SkypeLogin;
-		
-		private string _UserSignature;
-		
 		private EntitySet<Order> _Orders;
 		
     #region Extensibility Method Definitions
@@ -115,12 +109,6 @@ namespace LinqExample
     partial void OnUserNameChanged();
     partial void OnUserEmailChanging(string value);
     partial void OnUserEmailChanged();
-    partial void OnUserAvatarChanging(System.Data.Linq.Binary value);
-    partial void OnUserAvatarChanged();
-    partial void OnSkypeLoginChanging(string value);
-    partial void OnSkypeLoginChanged();
-    partial void OnUserSignatureChanging(string value);
-    partial void OnUserSignatureChanged();
     #endregion
 		
 		public User()
@@ -189,66 +177,6 @@ namespace LinqExample
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserAvatar", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary UserAvatar
-		{
-			get
-			{
-				return this._UserAvatar;
-			}
-			set
-			{
-				if ((this._UserAvatar != value))
-				{
-					this.OnUserAvatarChanging(value);
-					this.SendPropertyChanging();
-					this._UserAvatar = value;
-					this.SendPropertyChanged("UserAvatar");
-					this.OnUserAvatarChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SkypeLogin", DbType="NVarChar(50)")]
-		public string SkypeLogin
-		{
-			get
-			{
-				return this._SkypeLogin;
-			}
-			set
-			{
-				if ((this._SkypeLogin != value))
-				{
-					this.OnSkypeLoginChanging(value);
-					this.SendPropertyChanging();
-					this._SkypeLogin = value;
-					this.SendPropertyChanged("SkypeLogin");
-					this.OnSkypeLoginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserSignature", DbType="NVarChar(50)")]
-		public string UserSignature
-		{
-			get
-			{
-				return this._UserSignature;
-			}
-			set
-			{
-				if ((this._UserSignature != value))
-				{
-					this.OnUserSignatureChanging(value);
-					this.SendPropertyChanging();
-					this._UserSignature = value;
-					this.SendPropertyChanged("UserSignature");
-					this.OnUserSignatureChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Order", Storage="_Orders", ThisKey="UserId", OtherKey="UserId")]
 		public EntitySet<Order> Orders
 		{
@@ -305,7 +233,7 @@ namespace LinqExample
 		
 		private int _UserId;
 		
-		private System.DateTime _OrderDate;
+		private string _OrderDate;
 		
 		private int _Amount;
 		
@@ -319,7 +247,7 @@ namespace LinqExample
     partial void OnIdChanged();
     partial void OnUserIdChanging(int value);
     partial void OnUserIdChanged();
-    partial void OnOrderDateChanging(System.DateTime value);
+    partial void OnOrderDateChanging(string value);
     partial void OnOrderDateChanged();
     partial void OnAmountChanging(int value);
     partial void OnAmountChanged();
@@ -375,8 +303,8 @@ namespace LinqExample
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderDate", DbType="Date NOT NULL")]
-		public System.DateTime OrderDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderDate", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string OrderDate
 		{
 			get
 			{

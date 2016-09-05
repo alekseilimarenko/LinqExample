@@ -16,6 +16,53 @@ namespace LinqExample
     public class ClientWebService : WebService
     {
         [WebMethod]
+        public int GetClientList()
+        {
+            int res = 0;
+
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
+            {
+                using (var cmd = new SqlCommand("Select * FROM Users", con))
+                {
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        res = int.Parse(reader[0].ToString());
+                    }
+                    reader.Close();
+                }
+            }
+            return res;
+        }
+
+        [WebMethod]
+        public int InsertTestingData()
+        {
+            int res = 0;
+
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
+            {
+                using (var cmd = new SqlCommand("InsertTestingData", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+
+                    res = cmd.ExecuteNonQuery();
+                }
+            }
+            return res;
+        }
+
+        [WebMethod]
         public DataSet GetClientById(int clientId)
         {
             DataSet ds = new DataSet();
