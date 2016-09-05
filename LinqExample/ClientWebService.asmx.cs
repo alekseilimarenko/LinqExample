@@ -43,7 +43,7 @@ namespace LinqExample
         [WebMethod]
         public int InsertTestingData()
         {
-            int res = 0;
+            int res;
 
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
             {
@@ -117,13 +117,15 @@ namespace LinqExample
         }
 
         [WebMethod]
-        public int InsertClient(string clientName, string clientAddress)
+        public int InsertClient(string clientName, string clientAddress, string orderDate, string amount)
         {
-            int res;
+            int res = 0;
             using (var con =
-                    new SqlConnection(
-                        ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
+                new SqlConnection(
+                    ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
             {
+                int resClient;
+
                 using (var cmd = new SqlCommand("InsertClient", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -135,9 +137,30 @@ namespace LinqExample
                         con.Open();
                     }
 
-                    res = cmd.ExecuteNonQuery();
+                    resClient = cmd.ExecuteNonQuery();
+                }
+
+                if (resClient != -1)
+                {
+                    int clientId = GetClientIdByNameAndAddress(clientName, clientAddress);
+
+                    using (var cmd = new SqlCommand("InsertOrder", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("ClientId", SqlDbType.Int).Value = clientId;
+                        cmd.Parameters.Add("Date", SqlDbType.VarChar).Value = orderDate;
+                        cmd.Parameters.Add("Amount", SqlDbType.Int).Value = amount;
+
+                        if (con.State != ConnectionState.Open)
+                        {
+                            con.Open();
+                        }
+
+                        res = cmd.ExecuteNonQuery();
+                    }
                 }
             }
+        
             return res;
         }
 

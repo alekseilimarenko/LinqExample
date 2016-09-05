@@ -13,7 +13,7 @@
         <table>
             <tr>
                 <td>
-                    Name
+                    Имя
                 </td>
                 <td>
                     <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
@@ -21,12 +21,29 @@
             </tr>
             <tr>
                 <td>
-                    Address
+                    Адрес
                 </td>
                 <td>
                     <asp:TextBox ID="txtAddress" runat="server"></asp:TextBox>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    Дата заказа
+                </td>
+                <td>
+                    <asp:TextBox ID="txtOrderDate" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Сумма заказа
+                </td>
+                <td>
+                    <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+            <tr></tr>
             <tr>
                 <td>
                     <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" Text="ADD" Width="63px" />

@@ -20,7 +20,7 @@ namespace LinqExample
             }
             else
             {
-                var res = _ws.InsertClient(txtName.Text, txtAddress.Text);
+                var res = _ws.InsertClient(txtName.Text, txtAddress.Text, txtOrderDate, txtAmount);
                 if (res > 0)
                 {
                     txtName.Text = "";
