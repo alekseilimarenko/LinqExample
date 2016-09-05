@@ -28,10 +28,11 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
-                    
+                <td>
                     <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" Text="ADD" Width="63px" />
-                    
+                </td>
+                <td>
+                    <asp:Button ID="backToList" runat="server" Text="Back To List" Width="108px" OnClick="backToList_Click" />
                 </td>
             </tr>
         </table>

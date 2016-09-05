@@ -13,7 +13,7 @@ namespace LinqExample
                 where o.UserId == int.Parse(Request.QueryString["id"])
                 select new
                 {
-                    o.Date,
+                    o.OrderDate,
                     o.Amount
                 }).ToList();
 

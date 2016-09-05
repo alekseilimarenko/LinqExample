@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UsersList" Class="DBClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\UsersList.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="UsersListConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UsersList.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="UsersListConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -15,7 +15,7 @@
     <Type Name="Order">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OrderDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="User_Order" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>

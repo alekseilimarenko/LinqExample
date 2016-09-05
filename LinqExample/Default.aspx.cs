@@ -6,7 +6,7 @@ namespace LinqExample
 {
     public partial class Default : System.Web.UI.Page
     {
-        readonly DBClassesDataContext _dbContext = new DBClassesDataContext();
+        private readonly DBClassesDataContext _dbContext = new DBClassesDataContext();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -15,7 +15,7 @@ namespace LinqExample
 
         protected void myGridView_SelectedIndexChanged(object sender, EventArgs eventArgs)
         {
-            GridViewRow row = myGridView.SelectedRow;
+            var row = myGridView.SelectedRow;
             if (row != null)
             {
                 Response.Redirect( "ClientDetailInfoPage.aspx?id=" + int.Parse(row.Cells[0].Text));
@@ -34,24 +34,40 @@ namespace LinqExample
 
         protected void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            var q = (from c in _dbContext.Users
-                     join o in _dbContext.Orders
-                     on c.UserId equals o.UserId into orders
-                     where c.UserName.StartsWith(txtSearch.Text)
-                     select new
-                     {
-                         c.UserId,
-                         c.UserName,
-                         c.UserEmail,
-                         Amount = (from ord in _dbContext.Orders
-                                         where c.UserId == ord.UserId
-                                         select ord.Amount).Sum()
-    
-                     }).ToList();
+            try
+            {
+                var q = (from c in _dbContext.Users
+                         join o in _dbContext.Orders
+                         on c.UserId equals o.UserId into orders
+                         where c.UserName.StartsWith(txtSearch.Text)
+                         select new
+                         {
+                             c.UserId,
+                             c.UserName,
+                             c.UserEmail,
+                             Amount = (from ord in _dbContext.Orders
+                                       where c.UserId == ord.UserId
+                                       select ord.Amount).Sum()
+                         }).ToList();
 
-            myGridView.DataSourceID = null;
-            myGridView.DataSource = q;
-            myGridView.DataBind();
+
+                if (q.Count == 0)
+                {
+                    myGridView.DataSourceID = null;
+
+                    lblResult.Text = "Данные отсутствуют";
+                }
+                else
+                {
+                    myGridView.DataSourceID = null;
+                    myGridView.DataSource = q;
+                    myGridView.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

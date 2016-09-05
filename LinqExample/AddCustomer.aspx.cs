@@ -32,6 +32,13 @@ namespace LinqExample
                     lblResult.Text = "Данные отсутствуют";
                 }
             }
+
+            Response.Redirect("Default.aspx");
+        }
+
+        protected void backToList_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx");
         }
     }
 }

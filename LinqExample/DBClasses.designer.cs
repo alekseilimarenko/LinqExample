@@ -305,7 +305,7 @@ namespace LinqExample
 		
 		private int _UserId;
 		
-		private System.DateTime _Date;
+		private System.DateTime _OrderDate;
 		
 		private int _Amount;
 		
@@ -319,8 +319,8 @@ namespace LinqExample
     partial void OnIdChanged();
     partial void OnUserIdChanging(int value);
     partial void OnUserIdChanged();
-    partial void OnDateChanging(System.DateTime value);
-    partial void OnDateChanged();
+    partial void OnOrderDateChanging(System.DateTime value);
+    partial void OnOrderDateChanged();
     partial void OnAmountChanging(int value);
     partial void OnAmountChanged();
     #endregion
@@ -375,22 +375,22 @@ namespace LinqExample
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Date
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderDate", DbType="Date NOT NULL")]
+		public System.DateTime OrderDate
 		{
 			get
 			{
-				return this._Date;
+				return this._OrderDate;
 			}
 			set
 			{
-				if ((this._Date != value))
+				if ((this._OrderDate != value))
 				{
-					this.OnDateChanging(value);
+					this.OnOrderDateChanging(value);
 					this.SendPropertyChanging();
-					this._Date = value;
-					this.SendPropertyChanged("Date");
-					this.OnDateChanged();
+					this._OrderDate = value;
+					this.SendPropertyChanged("OrderDate");
+					this.OnOrderDateChanged();
 				}
 			}
 		}
