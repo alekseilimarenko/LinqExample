@@ -14,18 +14,14 @@ namespace LinqExample
         {
             var dbContext = new DBClassesDataContext();
 
-            var userOrders = (from ord in dbContext.Orders
-                                    where ord.UserId == int.Parse(Request.QueryString["UserId"])
-                                    select ord).ToList();
-
             var user = (from u in dbContext.Users
                                     where u.UserId == int.Parse(Request.QueryString["UserId"])
                                     select u).SingleOrDefault();
 
             try
             {
-                dbContext.Orders.DeleteAllOnSubmit(userOrders);
-                dbContext.Users.DeleteOnSubmit(user);
+                if (user != null)
+                    dbContext.Users.DeleteOnSubmit(user);
                 dbContext.SubmitChanges();
             }
             catch (Exception ex)

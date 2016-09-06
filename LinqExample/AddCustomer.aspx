@@ -32,7 +32,7 @@
                     Дата заказа
                 </td>
                 <td>
-                    <asp:TextBox ID="txtOrderDate" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtOrderDate" runat="server" CausesValidation="True" ValidateRequestMode="Enabled"></asp:TextBox>
                 </td>
             </tr>
             <tr>

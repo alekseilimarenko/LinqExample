@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace LinqExample
 {
@@ -13,27 +14,34 @@ namespace LinqExample
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            var resIns = _ws.GetClientIdByNameAndAddress(txtName.Text, txtAddress.Text);
-            if (resIns > 0)
+            try
             {
-                lblResult.Text = "Клиент с данным именем и адресом уже присутствует в базе";
-            }
-            else
-            {
-                var res = _ws.InsertClient(txtName.Text, txtAddress.Text, txtOrderDate, txtAmount);
-                if (res > 0)
+                var resIns = _ws.GetClientIdByNameAndAddress(txtName.Text, txtAddress.Text);
+                if (resIns > 0)
                 {
-                    txtName.Text = "";
-                    txtAddress.Text = "";
-                    lblResult.Text = "Данные добавлены в базу успешно";
+                    lblResult.Text = "Клиент с данным именем и адресом уже присутствует в базе";
                 }
                 else
                 {
-                    lblResult.Text = "Данные отсутствуют";
+                    var res = _ws.InsertClient(txtName.Text, txtAddress.Text, txtOrderDate.Text, int.Parse(txtAmount.Text));
+                    if (res > 0)
+                    {
+                        txtName.Text = "";
+                        txtAddress.Text = "";
+                        lblResult.Text = "Данные добавлены в базу успешно";
+                    }
+                    else
+                    {
+                        lblResult.Text = "Данные отсутствуют";
+                    }
                 }
-            }
 
-            Response.Redirect("Default.aspx");
+                Response.Redirect("Default.aspx");
+            }
+            catch (FormatException fex)
+            {
+                lblResult.Text = "неправильный формат даты или суммы заказа";
+            }
         }
 
         protected void backToList_Click(object sender, EventArgs e)
