@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Web.Services;
 using System.Data;
 using System.Configuration;
@@ -43,22 +44,30 @@ namespace LinqExample
         [WebMethod]
         public int InsertTestingData()
         {
-            int res;
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
+            int res = 0;
+            try
             {
-                using (var cmd = new SqlCommand("InsertTestingData", con))
+                using (var con = new SqlConnection(
+                            ConfigurationManager.ConnectionStrings["UsersListConnectionString"].ConnectionString))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    if (con.State != ConnectionState.Open)
+                    using (var cmd = new SqlCommand("InsertTestingData", con))
                     {
-                        con.Open();
-                    }
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    res = cmd.ExecuteNonQuery();
+                        if (con.State != ConnectionState.Open)
+                        {
+                            con.Open();
+                        }
+
+                        res = cmd.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (SqlException se)
+            {
+                Console.WriteLine(se.Errors);
+            }
+           
             return res;
         }
 
@@ -102,12 +111,12 @@ namespace LinqExample
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("ClientName", SqlDbType.VarChar).Value = clientName;
                     cmd.Parameters.Add("ClientAddress", SqlDbType.VarChar).Value = clientAddress;
-                    SqlParameter parameter = new SqlParameter("@Identity", SqlDbType.Int, 0, "UserId")
+                    SqlParameter returnVal = new SqlParameter("@Identity", SqlDbType.Int, 0, "UserId")
                     {
-                        Direction = ParameterDirection.Output
+                        Direction = ParameterDirection.ReturnValue
                     };
 
-                    cmd.Parameters.Add(parameter);
+                    cmd.Parameters.Add(returnVal);
 
                     if (con.State != ConnectionState.Open)
                     {
@@ -116,24 +125,26 @@ namespace LinqExample
 
                     resClient = cmd.ExecuteNonQuery();
 
-                    clientId = int.Parse(parameter.Value.ToString());
+                    clientId = int.Parse(returnVal.Value.ToString());
                 }
 
                 if (resClient == -1) return res;
-
-                using (var cmd = new SqlCommand("InsertOrder", con))
+                if(orderDate != "" && amount != 0)
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("ClientId", SqlDbType.Int).Value = clientId;
-                    cmd.Parameters.Add("Date", SqlDbType.VarChar).Value = orderDate;
-                    cmd.Parameters.Add("Amount", SqlDbType.Int).Value = amount;
-
-                    if (con.State != ConnectionState.Open)
+                    using (var cmd = new SqlCommand("InsertOrder", con))
                     {
-                        con.Open();
-                    }
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("ClientId", SqlDbType.Int).Value = clientId;
+                        cmd.Parameters.Add("Date", SqlDbType.VarChar).Value = orderDate;
+                        cmd.Parameters.Add("Amount", SqlDbType.Int).Value = amount;
 
-                    res = cmd.ExecuteNonQuery();
+                        if (con.State != ConnectionState.Open)
+                        {
+                            con.Open();
+                        }
+
+                        res = cmd.ExecuteNonQuery();
+                    }
                 }
             }
             

@@ -18,6 +18,9 @@
                 <td>
                     <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
                 </td>
+                <td>
+                    <asp:Label ID="lblName" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -26,13 +29,19 @@
                 <td>
                     <asp:TextBox ID="txtAddress" runat="server"></asp:TextBox>
                 </td>
+                <td>
+                    <asp:Label ID="lblAddress" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td>
                     Дата заказа
                 </td>
                 <td>
-                    <asp:TextBox ID="txtOrderDate" runat="server" CausesValidation="True" ValidateRequestMode="Enabled"></asp:TextBox>
+                    <asp:TextBox AutoPostBack="True" ID="txtOrderDate" OnTextChanged="txtOrderDate_OnTextChanged" runat="server"></asp:TextBox>
+                </td>
+                 <td>
+                    <asp:Label ID="lblDate" runat="server"></asp:Label>
                 </td>
             </tr>
             <tr>
@@ -40,10 +49,12 @@
                     Сумма заказа
                 </td>
                 <td>
-                    <asp:TextBox ID="txtAmount" runat="server"></asp:TextBox>
+                    <asp:TextBox AutoPostBack="True" ID="txtAmount" OnTextChanged="txtAmount_OnTextChanged" runat="server"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:Label ID="lblAmount" runat="server"></asp:Label>
                 </td>
             </tr>
-            <tr></tr>
             <tr>
                 <td>
                     <asp:Button ID="btnAdd" runat="server" OnClick="btnAdd_Click" Text="ADD" Width="63px" />
