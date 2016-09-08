@@ -13,18 +13,18 @@ namespace LinqExample
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            lblName.Text = "";
-            lblAddress.Text = "";
+            lblNameError.Text = "";
+            lblAddressError.Text = "";
 
             if (txtName.Text == "")
             {
-                lblName.Text = "поле не может быть пустым";
+                lblNameError.Text = "поле не может быть пустым";
                 return;
             }
 
             if (txtAddress.Text == "")
             {
-                lblAddress.Text = "поле не может быть пустым";
+                lblAddressError.Text = "поле не может быть пустым";
                 return;
             }
 
@@ -58,28 +58,28 @@ namespace LinqExample
 
         protected void txtOrderDate_OnTextChanged(object sender, EventArgs e)
         {
-            lblDate.Text = "";
+            lblDateError.Text = "";
 
             DateTime dt;
             if (!DateTime.TryParse(txtOrderDate.Text, out dt))
             {
-                lblDate.Text = "неверный формат даты";
+                lblDateError.Text = "неверный формат даты";
             }
         }
 
         protected void txtAmount_OnTextChanged(object sender, EventArgs e)
         {
-            lblAmount.Text = "";
+            lblAmountError.Text = "";
 
             if (txtOrderDate.Text != "" && txtAmount.Text == "")
             {
-                lblAmount.Text = "поле не может быть пустым";
+                lblAmountError.Text = "поле не может быть пустым";
                 return;
             }
 
             if (!char.IsDigit(txtAmount.Text, 0))
             {
-                lblAmount.Text = "ошибка ввода числа";
+                lblAmountError.Text = "ошибка ввода числа";
             }
         }
 

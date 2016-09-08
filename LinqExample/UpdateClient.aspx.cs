@@ -36,5 +36,10 @@ namespace LinqExample
             txtName.Text = q.UserName;
             txtAddress.Text = q.UserEmail;
         }
+
+        protected void backToList_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx");
+        }
     }
 }
